@@ -33,6 +33,8 @@ docker run \
     --name zookeeper \
     zookeeper
 
+sleep 5s
+
 # Run the Mesos master
 docker_rm mesos-master
 docker run \
@@ -41,7 +43,7 @@ docker run \
     --net="host" \
     -e "LIBPROCESS_IP=$LIBPROCESS_IP" \
     --name mesos-master \
-    mesos-master
+    mesos-master --ip=9.186.57.67  --hostname_lookup=false
 
 # Run the Mesos agent
 docker_rm mesos-agent
@@ -56,7 +58,7 @@ nvidia-docker run \
     -v /sys/fs/cgroup/docker \
     --privileged \
     --name mesos-agent \
-    mesos-agent
+    mesos-agent --ip=9.186.57.67  --hostname_lookup=false
 
 # Run Marathon
 docker_rm marathon

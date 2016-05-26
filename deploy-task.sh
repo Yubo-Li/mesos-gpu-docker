@@ -6,7 +6,7 @@ CONFIG=$(cat << EOF
     "cmd": "nvidia-smi; sleep 60;",
     "cpus": 0.1,
     "mem": 128.0,
-    "gpus": 2,
+    "gpus": 1,
     "instances": 1
 }
 EOF

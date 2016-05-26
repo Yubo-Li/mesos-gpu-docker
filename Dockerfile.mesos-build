@@ -10,4 +10,4 @@ RUN rm -rf build && \
     ../configure --enable-nvidia-gpu-support \
                  --with-nvml-include=/opt/nvidia-gdk/usr/include \
                  --with-nvml-lib=/opt/nvidia-gdk/usr/src/gdk/nvml/lib && \
-    make -j install
+    make -j2 install

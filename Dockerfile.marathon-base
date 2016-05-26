@@ -13,15 +13,21 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E56151BF && \
     apt-get install --no-install-recommends -y --force-yes mesos=0.28.0-2.0.16.debian81 lxc
 
 # Install docker
-ARG DOCKER_VERSION=latest
-RUN curl -o /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} && chmod +x /usr/bin/docker
+ARG DOCKER_VERSION=1.9.1-0~trusty
+RUN apt-get -y install apt-transport-https apparmor
+RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+RUN echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" > /etc/apt/sources.list.d/docker.list
+RUN apt-get update && apt-get purge lxc-docker* && apt-cache policy docker-engine
+RUN apt-get -y install docker-engine=$DOCKER_VERSION
 
 # Clone marathon
-RUN git clone https://github.com/mesosphere/marathon.git
+#RUN git clone https://github.com/mesosphere/marathon.git
+RUN git clone https://github.com/liyubobj/marathon.git
 
 WORKDIR /marathon
-
+ARG MARA_VERSION=v1.1.1-gpu-v2
 # Install sbt 
+RUN git checkout $MARA_VERSION
 RUN eval $(sed s/sbt.version/SBT_VERSION/ </marathon/project/build.properties) && \
     mkdir -p /usr/local/bin && \
     wget -P /usr/local/bin/ https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/$SBT_VERSION/sbt-launch.jar

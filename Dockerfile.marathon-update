@@ -6,11 +6,12 @@
 #
 FROM marathon-build
 
-RUN git reset --hard HEAD && \
-    git checkout master && \
-    git pull
+#RUN git reset --hard HEAD && \
+#    git checkout master && \
+#    git pull
 
-RUN sbt -Dsbt.log.format=false assembly && \
+# In current we have not added test cases so we skip tests.
+RUN sbt -Dsbt.log.format=false 'set test in Test := {}' clean assembly && \
         mv $(find target -name 'marathon-assembly-*.jar' | sort | tail -1) ./ && \
         rm -rf target/* && \
         mv marathon-assembly-*.jar target

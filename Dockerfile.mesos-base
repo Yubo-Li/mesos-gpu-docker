@@ -25,6 +25,7 @@ RUN yum install -y java-1.8.0-openjdk-devel \
                    apr-utils-devel \
                    subversion-devel \
                    libevent-devel \
+                   elfutils-libelf-devel \
                    libev-devel && \
     yum clean all
 
